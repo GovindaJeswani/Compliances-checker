@@ -1,28 +1,19 @@
 {
-  "name": "compliance-monitor-service",
+  "name": "compliance-alerts-microservice",
   "version": "1.0.0",
-  "description": "Microservice to monitor compliance alerts",
+  "description": "Global Trade Compliance Alert Microservice",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development node index.js"
   },
-  "keywords": [
-    "compliance",
-    "microservice"
-  ],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "axios": "^1.6.2",
-    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "natural": "^6.10.4",
     "node-cron": "^3.0.2"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=16.0.0"
   }
 }

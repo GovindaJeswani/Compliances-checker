@@ -135,44 +135,118 @@ async function logProcessedAlert(alert) {
 }
 
 // Get mock alerts - in a real system, this would call an API
+// Get mock alerts - in a real system, this would call an API
 function getMockAlerts() {
-  // Combine both of your datasets to simulate different alerts on different runs
-  return {
-    lastChecked: new Date().toISOString(),
-    alertCount: 2,
-    complianceAlerts: [
-      {
-        "alertId": "CA-" + Date.now() + "-001",
-        "summary": "New tariffs (unspecified rate) affecting trade of petroleum",
-        "product": "petroleum",
-        "restrictionType": "tariff",
-        "fromCountries": ["u.s."],
-        "toCountries": [],
-        "tariffRate": null,
-        "effectiveDate": null,
-        "datePublished": new Date().toISOString(),
-        "source": "Yahoo Finance",
-        "title": "Oil Set for Weekly Loss Amid U.S. Tariffs, OPEC+ Output Plans",
-        "link": "https://www.wsj.com/finance/commodities-futures/oil-edges-higher-as-traders-assess-divergent-developments-6eed653b?siteid=yhoof2&yptr=yahoo",
-        "confidence": 85
-      },
-      {
-        "alertId": "CA-" + Date.now() + "-002", 
-        "summary": "New tariffs (unspecified rate) affecting exports of semiconductor",
-        "product": "semiconductor",
-        "restrictionType": "tariff",
-        "fromCountries": ["taiwan"],
-        "toCountries": [],
-        "tariffRate": null,
-        "effectiveDate": null,
-        "datePublished": new Date().toISOString(),
-        "source": "Yahoo Finance",
-        "title": "Taiwan Feb exports beat forecasts as chip demand jumps before feared Trump tariffs",
-        "link": "https://finance.yahoo.com/news/taiwan-feb-exports-beat-forecasts-090936765.html",
-        "confidence": 85
-      }
-    ]
-  };
+  // Return a different dataset each time to simulate new alerts
+  const datasets = [
+    {
+      "lastChecked": "2025-03-08T09:27:46.304Z",
+      "alertCount": 2,
+      "complianceAlerts": [
+        {
+          "alertId": "CA-1741426128391-130",
+          "summary": "New tariffs (unspecified rate) affecting trade of petroleum",
+          "product": "petroleum",
+          "restrictionType": "tariff",
+          "fromCountries": ["u.s."],
+          "toCountries": [],
+          "tariffRate": null,
+          "effectiveDate": null,
+          "datePublished": "2025-03-07T09:08:00.000Z",
+          "source": "Yahoo Finance",
+          "title": "Oil Set for Weekly Loss Amid U.S. Tariffs, OPEC+ Output Plans",
+          "link": "https://www.wsj.com/finance/commodities-futures/oil-edges-higher-as-traders-assess-divergent-developments-6eed653b?siteid=yhoof2&yptr=yahoo",
+          "confidence": 85
+        },
+        {
+          "alertId": "CA-1741426128392-231",
+          "summary": "New tariffs (unspecified rate) affecting exports of semiconductor",
+          "product": "semiconductor",
+          "restrictionType": "tariff",
+          "fromCountries": ["taiwan"],
+          "toCountries": [],
+          "tariffRate": null,
+          "effectiveDate": null,
+          "datePublished": "2025-03-07T09:09:36.000Z",
+          "source": "Yahoo Finance",
+          "title": "Taiwan Feb exports beat forecasts as chip demand jumps before feared Trump tariffs",
+          "link": "https://finance.yahoo.com/news/taiwan-feb-exports-beat-forecasts-090936765.html",
+          "confidence": 85
+        }
+      ]
+    },
+    {
+      "lastChecked": "2025-03-08T08:33:50.186Z",
+      "alertCount": 4,
+      "complianceAlerts": [
+        {
+          "alertId": "CA-1741422830186-001",
+          "summary": "New tariffs (25%) affecting imports of semiconductors",
+          "product": "semiconductor",
+          "restrictionType": "tariff",
+          "fromCountries": ["China", "Taiwan"],
+          "toCountries": ["United States"],
+          "tariffRate": "25%",
+          "effectiveDate": "April 1, 2025",
+          "datePublished": "2025-03-08T08:33:50.186Z",
+          "source": "Global Trade Magazine",
+          "title": "US Announces New Semiconductor Tariffs on Asian Imports",
+          "link": "https://www.example.com/news/123",
+          "confidence": 95
+        },
+        {
+          "alertId": "CA-1741422830186-002",
+          "summary": "Export restrictions affecting exports of automotive parts",
+          "product": "automotive",
+          "restrictionType": "ban/restriction",
+          "fromCountries": ["United States"],
+          "toCountries": ["Russia"],
+          "tariffRate": null,
+          "effectiveDate": "March 15, 2025",
+          "datePublished": "2025-03-08T08:33:50.186Z",
+          "source": "US CBP News",
+          "title": "New Export Restrictions on Auto Parts to Russia",
+          "link": "https://www.example.com/news/456",
+          "confidence": 90
+        },
+        {
+          "alertId": "CA-1741422830186-003",
+          "summary": "New tariffs (10%) affecting imports of steel",
+          "product": "steel",
+          "restrictionType": "tariff",
+          "fromCountries": ["Canada", "Mexico"],
+          "toCountries": ["United States"],
+          "tariffRate": "10%",
+          "effectiveDate": "next week",
+          "datePublished": "2025-03-08T08:33:50.186Z",
+          "source": "The Guardian International",
+          "title": "No room left for negotiation with Canada and Mexico on tariffs, says Trump",
+          "link": "https://www.example.com/news/789",
+          "confidence": 85
+        },
+        {
+          "alertId": "CA-1741422830186-004",
+          "summary": "New tariffs (20%) affecting imports of crude oil",
+          "product": "crude oil",
+          "restrictionType": "tariff",
+          "fromCountries": ["Canada"],
+          "toCountries": ["United States"],
+          "tariffRate": "20%",
+          "effectiveDate": "April 1, 2025",
+          "datePublished": "2025-03-08T08:33:50.186Z",
+          "source": "Global Trade Magazine",
+          "title": "Canada-U.S. Oil Trade Resilient Despite Potential Tariffs",
+          "link": "https://www.globaltrademag.com/canada-u-s-oil-trade-resilient-despite-potential-tariffs/",
+          "confidence": 80
+        }
+      ]
+    }
+  ];
+  
+  // Alternate between datasets
+  const time = new Date().getTime();
+  const datasetIndex = Math.floor(time / 60000) % datasets.length;
+  return datasets[datasetIndex];
 }
 
 module.exports = { processComplianceAlerts };
